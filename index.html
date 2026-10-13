@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Eclipse</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         PROJECT ECLIPSE MAIN MENU
+         ===================================== -->
+
+    <div id="mainMenu">
+
+        <div class="menuContent">
+
+            <img
+                src="assets/website/project-eclipse-logo.png"
+                alt="Project Eclipse"
+                id="gameLogo"
+            >
+
+            <div class="gameSubtitle">
+                SURVIVAL HORROR
+            </div>
+
+            <div id="mainMenuButtons">
+
+				<button id="playButton">
+					NEW GAME
+				</button>
+
+				<button id="continueButton" style="display: none;">
+					CONTINUE
+				</button>
+
+				<button id="controlsButton">
+					CONTROLS
+				</button>
+
+			</div>
+
+            <div class="systemStatus">
+                SYSTEM STATUS:
+                <span>OFFLINE</span>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <!-- =====================================
+     CONTROLS MENU
+     ===================================== -->
+
+	<div id="controlsMenu" class="menuHidden">
+
+		<div id="controlsPanel">
+
+			<div id="controlsTitle">
+				CONTROLS
+			</div>
+
+
+			<div class="controlRow">
+
+				<div class="controlName">
+					MOVE
+				</div>
+
+				<div class="controlKey">
+					ARROW KEYS
+				</div>
+
+			</div>
+
+
+			<div class="controlRow">
+
+				<div class="controlName">
+					PAUSE
+				</div>
+
+				<div class="controlKey">
+					ESC
+				</div>
+
+			</div>
+
+
+			<div class="controlRow">
+
+				<div class="controlName">
+					RESTART
+				</div>
+
+				<div class="controlKey">
+					R
+				</div>
+
+			</div>
+
+
+			<button id="controlsBackButton">
+				BACK
+			</button>
+
+		</div>
+
+	</div>
+
+
+		<!-- =====================================
+		 PROJECT ECLIPSE OPENING
+		 ===================================== -->
+
+		<div id="introScreen">
+
+			<div id="introContent">
+
+				<div id="introYear">
+					2070
+				</div>
+
+				<div id="introTitle">
+					PROJECT ECLIPSE
+				</div>
+
+				<div id="introText">
+				</div>
+
+				<div id="introContinue">
+					PRESS ENTER
+				</div>
+
+			</div>
+
+		</div>
+
+
+    <!-- =====================================
+         GAME
+         ===================================== -->
+
+    <canvas id="gameCanvas"></canvas>
+
+
+    <!-- =====================================
+         PAUSE MENU
+         ===================================== -->
+
+    <div id="pauseMenu">
+
+        <div id="pausePanel">
+
+            <div id="pauseTitle">
+                PROJECT ECLIPSE
+            </div>
+
+            <div id="pauseSubtitle">
+                GAME PAUSED
+            </div>
+
+            <button id="resumeButton">
+                RESUME
+            </button>
+
+            <button id="restartButton">
+                RESTART LEVEL
+            </button>
+
+            <button id="mainMenuButton">
+                MAIN MENU
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         GAME SCRIPTS
+         ===================================== -->
+
+    <script src="js/game.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/level.js"></script>
+    <script src="js/briefing.js"></script>
+    <script src="js/collision.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/light.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/soldiers.js"></script>
+    <script src="js/shadow.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/transitions.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/main.js"></script>
+
+
+    <!-- =====================================
+         WEBSITE MENU
+         ===================================== -->
+
+    <script>
+
+        const playButton =
+            document.getElementById("playButton");
+
+        const continueButton =
+            document.getElementById("continueButton");
+
+        const mainMenu =
+            document.getElementById("mainMenu");
+
+        const gameCanvas =
+            document.getElementById("gameCanvas");
+
+
+		// =====================================
+		// PROJECT ECLIPSE OPENING
+		// =====================================
+
+		const introScreen =
+			document.getElementById("introScreen");
+
+		const introYear =
+			document.getElementById("introYear");
+
+		const introTitle =
+			document.getElementById("introTitle");
+
+		const introText =
+			document.getElementById("introText");
+
+		const introContinue =
+			document.getElementById("introContinue");
+
+
+		let introActive = false;
+
+		let introStep = -1;
+
+
+		// =====================================
+		// OPENING STORY
+		// =====================================
+
+		const introScenes = [
+
+			{
+				text:
+					"Something was discovered\n" +
+					"beneath the Earth."
+			},
+
+			{
+				text:
+					"A research facility was built\n" +
+					"around it."
+			},
+
+			{
+				text:
+					"For years, scientists studied\n" +
+					"the phenomenon."
+			},
+
+			{
+				text:
+					"They called it an anomaly."
+			},
+
+			{
+				text:
+					"They believed it could be controlled."
+			},
+
+			{
+				text:
+					"Then, one night..."
+			},
+
+			{
+				text:
+					"The facility went silent."
+			},
+
+			{
+				text:
+					"No emergency transmission.\n" +
+					"No survivors."
+			},
+
+			{
+				text:
+					"Only darkness."
+			},
+
+			{
+				text:
+					"Three days later..."
+			},
+
+			{
+				text:
+					"You are sent inside."
+			}
+
+		];
+
+
+		// =====================================
+		// START OPENING
+		// =====================================
+
+		function startOpeningIntro(){
+
+			introActive = true;
+
+			introStep = -1;
+
+
+			// ---------------------------------
+			// Reset everything
+			// ---------------------------------
+
+			introYear.classList.remove(
+				"introShow",
+				"introHide"
+			);
+
+			introTitle.classList.remove(
+				"introShow",
+				"introHide"
+			);
+
+			introText.classList.remove(
+				"introShow",
+				"introHide"
+			);
+
+			introContinue.classList.remove(
+				"introShow"
+			);
+
+
+			introText.textContent = "";
+
+
+			// ---------------------------------
+			// Show screen
+			// ---------------------------------
+
+			introScreen.style.display = "flex";
+
+			introScreen.classList.add(
+				"introVisible"
+			);
+
+
+			// ---------------------------------
+			// Show year
+			// ---------------------------------
+
+			setTimeout(
+				function(){
+
+					if(!introActive){
+						return;
+					}
+
+					introYear.classList.add(
+						"introShow"
+					);
+
+				},
+				300
+			);
+
+
+			// ---------------------------------
+			// Show title
+			// ---------------------------------
+
+			setTimeout(
+				function(){
+
+					if(!introActive){
+						return;
+					}
+
+					introYear.classList.remove(
+						"introShow"
+					);
+
+					introYear.classList.add(
+						"introHide"
+					);
+
+
+					setTimeout(
+						function(){
+
+							if(!introActive){
+								return;
+							}
+
+							introTitle.classList.add(
+								"introShow"
+							);
+
+							introContinue.classList.add(
+								"introShow"
+							);
+
+						},
+						800
+					);
+
+				},
+				2800
+			);
+
+		}
+
+
+		// =====================================
+		// NEXT INTRO STEP
+		// =====================================
+
+		function showNextIntroScene(){
+
+			if(!introActive){
+				return;
+			}
+
+
+			// ---------------------------------
+			// First Enter
+			// PROJECT ECLIPSE → STORY
+			// ---------------------------------
+
+			if(introStep === -1){
+
+				introStep = 0;
+
+
+				introTitle.classList.remove(
+					"introShow"
+				);
+
+				introTitle.classList.add(
+					"introHide"
+				);
+
+				introContinue.classList.remove(
+					"introShow"
+				);
+
+
+				setTimeout(
+					function(){
+
+						if(!introActive){
+							return;
+						}
+
+						showIntroText();
+
+					},
+					700
+				);
+
+
+				return;
+
+			}
+
+
+			// ---------------------------------
+			// Next story scene
+			// ---------------------------------
+
+			if(
+				introStep >= 0 &&
+				introStep < introScenes.length - 1
+			){
+
+				introText.classList.remove(
+					"introShow"
+				);
+
+				introText.classList.add(
+					"introHide"
+				);
+
+
+				introStep++;
+
+
+				setTimeout(
+					function(){
+
+						if(!introActive){
+							return;
+						}
+
+						showIntroText();
+
+					},
+					500
+				);
+
+
+				return;
+
+			}
+
+
+			// ---------------------------------
+			// Last scene → start game
+			// ---------------------------------
+
+			finishOpeningIntro();
+
+		}
+
+
+		// =====================================
+		// DISPLAY STORY TEXT
+		// =====================================
+
+		function showIntroText(){
+
+			introText.textContent =
+				introScenes[introStep].text;
+
+
+			introText.classList.remove(
+				"introHide"
+			);
+
+			introText.classList.add(
+				"introShow"
+			);
+
+
+			introContinue.classList.add(
+				"introShow"
+			);
+
+		}
+
+
+		// =====================================
+		// FINISH OPENING
+		// =====================================
+
+		function finishOpeningIntro(){
+
+			introActive = false;
+
+
+			introText.classList.remove(
+				"introShow"
+			);
+
+			introText.classList.add(
+				"introHide"
+			);
+
+
+			introContinue.classList.remove(
+				"introShow"
+			);
+
+
+			setTimeout(
+				function(){
+
+					introScreen.classList.remove(
+						"introVisible"
+					);
+
+
+					introScreen.style.display =
+						"none";
+
+
+					// ---------------------------------
+					// START LEVEL 1
+					// ---------------------------------
+
+					loadLevel(1);
+					
+					gamePaused = false;
+					
+					gameFinished = false;
+					levelComplete = false;
+					endingFade = 0;
+
+					gameCanvas.focus();
+
+				},
+				1000
+			);
+
+		} 
+        // =====================================
+		// GAME FULLSCREEN
+		// =====================================
+
+		function enterGameFullscreen(){
+
+			if(document.documentElement.requestFullscreen){
+
+				return document.documentElement
+					.requestFullscreen()
+					.catch(function(){
+
+						// Fullscreen may be unavailable.
+						return null;
+
+					});
+
+			}
+
+			return Promise.resolve();
+
+		}
+            
+        const controlsButton =
+			document.getElementById("controlsButton");
+
+		const controlsMenu =
+			document.getElementById("controlsMenu");
+
+		const controlsBackButton =
+			document.getElementById("controlsBackButton");
+
+
+        // =====================================
+        // CONTINUE BUTTON VISIBILITY
+        // =====================================
+
+        function showContinueButton(){
+
+            continueButton.style.display = "block";
+
+        }
+        
+        
+        // =====================================
+		// CONTROLS MENU
+		// =====================================
+
+		controlsButton.addEventListener(
+			"click",
+			function(){
+				
+				gamePaused = true;
+
+				/*
+				 * Hide the main menu.
+				 */
+
+				mainMenu.classList.add("menuHidden");
+
+
+				/*
+				 * Show the controls menu.
+				 */
+
+				controlsMenu.classList.remove(
+					"menuHidden"
+				);
+
+
+				/*
+				 * Start with BACK selected.
+				 */
+
+				controlsSelection = 0;
+
+				activeMenu = "controls";
+
+				updateMenuSelection();
+
+			}
+		);
+		
+		// =====================================
+		// CONTROLS BACK BUTTON
+		// =====================================
+
+		controlsBackButton.addEventListener(
+			"click",
+			function(){
+
+				/*
+				 * Hide Controls.
+
+				 */
+
+				controlsMenu.classList.add(
+					"menuHidden"
+				);
+
+
+				/*
+				 * Show the main menu.
+
+				 */
+
+				mainMenu.classList.remove(
+					"menuHidden"
+				);
+
+
+				/*
+				 * Keep the game paused.
+
+				 */
+
+				gamePaused = true;
+
+
+				/*
+				 * Select NEW GAME.
+
+				 */
+
+				activeMenu = "main";
+
+				mainMenuSelection = 0;
+
+				updateMenuSelection();
+
+			}
+		);
+
+
+        // =====================================
+        // NEW GAME
+        // =====================================
+
+        playButton.addEventListener(
+            "click",
+            function(){
+
+                /*
+                 * Prevent the button from
+                 * being clicked twice.
+                 */
+
+                playButton.disabled = true;
+                
+                // =====================================
+				// ENTER FULLSCREEN
+				// =====================================
+
+				if(document.documentElement.requestFullscreen){
+
+					document.documentElement.requestFullscreen()
+						.catch(function(){
+
+							// Fullscreen may be denied by
+							// the browser. Continue normally.
+
+						});
+
+				}
+                
+                mainMenuSelection = 0;
+
+
+                /*
+                 * Start a completely new game.
+                 */
+
+                gamePaused = true;
+
+                localStorage.setItem(
+                    "currentLevel",
+                    "1"
+                );
+
+                /*
+				 * Start the opening story
+				 * before Level 1.
+				 */
+
+				startOpeningIntro();
+
+
+                /*
+                 * Show the game's volume button.
+                 */
+
+                volumeButton.style.display = "block";
+
+
+                /*
+                 * Hide the main menu.
+                 */
+
+                mainMenu.classList.add("menuHidden");
+
+
+                /*
+                 * Give the game canvas keyboard
+                 * focus after the transition.
+                 */
+
+                setTimeout(
+                    function(){
+
+                        gameCanvas.focus();
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+
+        // =====================================
+        // CONTINUE
+        // =====================================
+
+        continueButton.addEventListener(
+            "click",
+            function(){
+
+                /*
+                 * Prevent the button from
+                 * being clicked twice.
+                 */
+
+                continueButton.disabled = true;
+                
+                mainMenuSelection = 0;
+
+
+                /*
+                 * Resume the game.
+                 */
+
+                gamePaused = false;
+
+
+                /*
+                 * Load the saved level.
+                 */
+
+                loadSavedLevel();
+
+
+                /*
+                 * Show the game's volume button.
+                 */
+
+                volumeButton.style.display = "block";
+
+
+                /*
+                 * Hide the main menu.
+                 */
+
+                mainMenu.classList.add("menuHidden");
+
+
+                /*
+                 * Return keyboard focus
+                 * to the game.
+                 */
+
+                setTimeout(
+                    function(){
+
+                        gameCanvas.focus();
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+
+        // =====================================
+        // PAUSE MENU
+        // =====================================
+
+        const pauseMenu =
+            document.getElementById("pauseMenu");
+
+        const resumeButton =
+            document.getElementById("resumeButton");
+
+		let pauseSelection = 0;
+		
+		// =====================================
+		// FULLSCREEN EXIT → PAUSE GAME
+		// =====================================
+
+		document.addEventListener(
+			"fullscreenchange",
+			function(){
+
+				/*
+				 * If fullscreen was exited while
+				 * the game was running, pause it.
+				 */
+
+				if(
+					!document.fullscreenElement &&
+					mainMenu.classList.contains("menuHidden") &&
+					gamePaused === false
+				){
+
+					gamePaused = true;
+
+					pauseMenu.style.display = "flex";
+
+					activeMenu = "pause";
+
+					pauseSelection = 0;
+
+					updateMenuSelection();
+
+					gameCanvas.focus();
+
+				}
+
+			}
+		);
+		
+		// =====================================
+		// UPDATE PAUSE MENU SELECTION
+		// =====================================
+
+		function updateMenuSelection(){
+
+			/*
+			 * Remove the selection from
+			 * every menu button first.
+			 */
+
+			pauseButtons.forEach(
+				function(button){
+
+					button.classList.remove(
+						"pauseSelected"
+					);
+
+				}
+			);
+
+
+			mainMenuButtons.forEach(
+				function(button){
+
+					button.classList.remove(
+						"pauseSelected"
+					);
+
+				}
+			);
+
+
+			/*
+			 * Highlight the currently
+			 * selected button.
+			 */
+
+			if(activeMenu === "pause"){
+
+				pauseButtons[pauseSelection]
+					.classList.add("pauseSelected");
+
+			}
+			else if(activeMenu === "main"){
+
+				mainMenuButtons[mainMenuSelection]
+					.classList.add("pauseSelected");
+
+			}
+			else if(activeMenu === "controls"){
+
+				controlsButtons[controlsSelection]
+					.classList.add("pauseSelected");
+
+			}
+
+		}
+
+
+        // =====================================
+		// KEYBOARD MENU CONTROL
+		// =====================================
+
+		window.addEventListener(
+			"keydown",
+			function(event){
+				
+				// =====================================
+				// OPENING INTRO ENTER
+				// =====================================
+
+				if(introActive){
+
+					if(event.key === "Enter"){
+
+						event.preventDefault();
+
+						showNextIntroScene();
+
+					}
+
+					return;
+
+				}
+
+				// =====================================
+				// ESCAPE
+				// =====================================
+
+				if(event.key === "Escape"){
+
+					/*
+					 * If the Controls menu is open,
+					 * return to the main menu.
+					 */
+
+					if(
+						!controlsMenu.classList.contains(
+							"menuHidden"
+						)
+					){
+
+						controlsMenu.classList.add(
+							"menuHidden"
+						);
+
+						mainMenu.classList.remove(
+							"menuHidden"
+						);
+
+						/*
+						 * Keep the game paused
+						 * while the main menu is visible.
+						 */
+
+						gamePaused = true;
+
+						activeMenu = "main";
+
+						mainMenuSelection = 0;
+
+						updateMenuSelection();
+
+						return;
+
+					}
+
+
+					/*
+					 * If the pause menu is open,
+					 * close it and resume the game.
+					 */
+
+					if(gamePaused){
+
+						return;
+
+					}
+
+
+					/*
+					 * If the main menu is visible,
+					 * ESC does nothing.
+					 */
+
+					if(
+						!mainMenu.classList.contains(
+							"menuHidden"
+						)
+					){
+
+						return;
+
+					}
+
+
+					/*
+					 * Otherwise open the
+					 * pause menu.
+					 */
+
+					gamePaused = true;
+
+					pauseMenu.style.display = "flex";
+
+					activeMenu = "pause";
+
+					pauseSelection = 0;
+
+					updateMenuSelection();
+
+					return;
+
+				}
+
+				// =====================================
+				// MAIN MENU KEYBOARD CONTROL
+				// =====================================
+
+				if(
+					!mainMenu.classList.contains(
+						"menuHidden"
+					)
+				){
+
+					if(event.key === "ArrowUp"){
+
+						event.preventDefault();
+
+						mainMenuSelection--;
+
+						/*
+						 * Skip hidden Continue button.
+						 */
+
+						if(
+							continueButton.style.display === "none"
+						){
+
+							mainMenuSelection = 0;
+
+						}
+						else if(mainMenuSelection < 0){
+
+							mainMenuSelection =
+								mainMenuButtons.length - 1;
+
+						}
+
+						activeMenu = "main";
+
+						updateMenuSelection();
+
+					}
+
+					else if(event.key === "ArrowDown"){
+
+						event.preventDefault();
+
+						/*
+						 * If Continue is hidden,
+						 * stay on New Game.
+						 */
+
+						if(
+							continueButton.style.display === "none"
+						){
+
+							mainMenuSelection = 0;
+
+						}
+						else{
+
+							mainMenuSelection++;
+
+							if(
+								mainMenuSelection >=
+								mainMenuButtons.length
+							){
+
+								mainMenuSelection = 0;
+
+							}
+
+						}
+
+						activeMenu = "main";
+
+						updateMenuSelection();
+
+					}
+
+					else if(event.key === "Enter"){
+
+						event.preventDefault();
+
+						mainMenuButtons[
+							mainMenuSelection
+						].click();
+
+					}
+
+					return;
+
+				}
+				
+				// =====================================
+				// CONTROLS MENU KEYBOARD CONTROL
+				// =====================================
+
+				if(
+					!controlsMenu.classList.contains(
+						"menuHidden"
+					)
+				){
+
+					if(event.key === "ArrowUp"){
+
+						event.preventDefault();
+
+						controlsSelection--;
+
+						if(controlsSelection < 0){
+
+							controlsSelection =
+								controlsButtons.length - 1;
+
+						}
+
+						activeMenu = "controls";
+
+						updateMenuSelection();
+
+					}
+
+					else if(event.key === "ArrowDown"){
+
+						event.preventDefault();
+
+						controlsSelection++;
+
+						if(
+							controlsSelection >=
+							controlsButtons.length
+						){
+
+							controlsSelection = 0;
+
+						}
+
+						activeMenu = "controls";
+
+						updateMenuSelection();
+
+					}
+
+					else if(event.key === "Enter"){
+
+						event.preventDefault();
+
+						controlsButtons[
+							controlsSelection
+						].click();
+
+					}
+
+					return;
+
+				}
+
+
+				// =====================================
+				// PAUSE MENU KEYBOARD CONTROL
+				// =====================================
+
+				if(!gamePaused){
+
+					return;
+
+				}
+
+
+				// =====================================
+				// UP
+				// =====================================
+
+				if(event.key === "ArrowUp"){
+
+					event.preventDefault();
+
+					pauseSelection--;
+
+					if(pauseSelection < 0){
+
+						pauseSelection =
+							pauseButtons.length - 1;
+
+					}
+
+					activeMenu = "pause";
+
+					updateMenuSelection();
+
+				}
+
+
+				// =====================================
+				// DOWN
+				// =====================================
+
+				else if(event.key === "ArrowDown"){
+
+					event.preventDefault();
+
+					pauseSelection++;
+
+					if(
+						pauseSelection >=
+						pauseButtons.length
+					){
+
+						pauseSelection = 0;
+
+					}
+
+					activeMenu = "pause";
+
+					updateMenuSelection();
+
+				}
+
+
+				// =====================================
+				// ENTER
+				// =====================================
+
+				else if(event.key === "Enter"){
+
+					event.preventDefault();
+
+					pauseButtons[
+						pauseSelection
+					].click();
+
+				}
+
+			},
+			true
+		);
+
+
+        // =====================================
+        // RESUME
+        // =====================================
+
+        resumeButton.addEventListener(
+			"click",
+			function(){
+
+				enterGameFullscreen().then(
+					function(){
+
+						gamePaused = false;
+
+						pauseMenu.style.display = "none";
+
+						gameCanvas.focus();
+
+					}
+				);
+
+			}
+		);
+
+
+        // =====================================
+        // RESTART LEVEL
+        // =====================================
+
+        const restartButton =
+            document.getElementById("restartButton");
+
+
+        restartButton.addEventListener(
+			"click",
+			function(){
+
+				enterGameFullscreen().then(
+					function(){
+
+						pauseMenu.style.display = "none";
+
+						gamePaused = false;
+
+						loadLevel(level.current);
+
+						gameCanvas.focus();
+
+					}
+				);
+
+			}
+		);
+
+
+        // =====================================
+        // MAIN MENU
+        // =====================================
+
+        const mainMenuButton =
+            document.getElementById("mainMenuButton");
+            
+        // =====================================
+		// MENU KEYBOARD SELECTION
+		// =====================================
+
+		const pauseButtons = [
+			resumeButton,
+			restartButton,
+			mainMenuButton
+		];
+
+		const mainMenuButtons = [
+			playButton,
+			continueButton,
+			controlsButton
+		];
+
+		const controlsButtons = [
+			controlsBackButton
+		];
+
+		let mainMenuSelection = 0;
+
+		let controlsSelection = 0;
+
+		let activeMenu = "pause";
+
+
+        mainMenuButton.addEventListener(
+            "click",
+            function(){
+				
+				if(document.fullscreenElement){
+
+					document.exitFullscreen();
+
+				}
+
+                /*
+                 * Pause the game.
+                 */
+
+                gamePaused = true;
+
+
+                /*
+                 * Hide the pause menu.
+                 */
+
+                pauseMenu.style.display = "none";
+
+
+                /*
+                 * Hide the game's volume button.
+                 */
+
+                volumeButton.style.display = "none";
+
+
+                /*
+                 * Show the Project Eclipse
+                 * main menu.
+                 */
+
+                mainMenu.classList.remove("menuHidden");
+
+
+                /*
+                 * Allow the menu buttons
+                 * to be clicked again.
+                 */
+
+                playButton.disabled = false;
+
+                continueButton.disabled = false;
+
+
+                /*
+                 * The player has now returned
+                 * from the game.
+                 *
+                 * Show Continue.
+                 */
+
+                showContinueButton();
+                
+                mainMenuSelection = 0;
+
+				activeMenu = "main";
+
+				updateMenuSelection();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

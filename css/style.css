@@ -1,0 +1,1446 @@
+/* =====================================
+   PROJECT ECLIPSE
+   GLOBAL
+   ===================================== */
+
+html{
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+body{
+
+    margin: 0;
+
+    padding: 0;
+
+    width: 100vw;
+
+    height: 100dvh;
+
+    background: #000;
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================
+   GAME CANVAS
+   ===================================== */
+
+canvas{
+
+    display: block;
+
+    width: 100vw;
+
+    height: 100dvh;
+
+}
+
+
+/* =====================================
+   MAIN MENU
+   ===================================== */
+
+#mainMenu{
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+
+    height: 100dvh;
+    height: 100dvh;
+    
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 20px;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #181b20 0%,
+            #0b0d10 45%,
+            #000000 100%
+        );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 10000;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+
+}
+
+
+/* =====================================
+   MENU HIDDEN
+   ===================================== */
+
+#mainMenu.menuHidden{
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================
+   MENU CONTENT
+   ===================================== */
+
+.menuContent{
+
+    width: 90%;
+
+    max-width: 900px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    text-align: center;
+
+}
+
+
+/* =====================================
+   PROJECT ECLIPSE LOGO
+   ===================================== */
+
+#gameLogo{
+
+    display: block;
+
+    width: min(75vw, 700px);
+
+    height: auto;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =====================================
+   SUBTITLE
+   ===================================== */
+
+.gameSubtitle{
+
+    color: #8b9199;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    letter-spacing: 7px;
+
+    margin-bottom: 45px;
+
+}
+
+/* =====================================
+   MAIN MENU BUTTONS
+   ===================================== */
+
+#mainMenuButtons{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+/* =====================================
+   PLAY BUTTON
+   ===================================== */
+
+#playButton,
+#continueButton{
+
+    width: 220px;
+
+    height: 58px;
+
+    padding: 0;
+
+    background: rgba(5, 6, 8, 0.9);
+
+    border: 1px solid #555b63;
+
+    color: #d7d9dc;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    letter-spacing: 6px;
+
+    cursor: pointer;
+
+    transition:
+
+        background 0.2s ease,
+
+        border-color 0.2s ease,
+
+        color 0.2s ease,
+
+        transform 0.2s ease;
+
+}
+
+
+#playButton:hover,
+#continueButton:hover{
+
+    background: #1a1d22;
+
+    border-color: #aeb3ba;
+
+    color: #fff;
+
+    transform: scale(1.03);
+
+}
+
+
+#playButton:active{
+
+    transform: scale(0.98);
+
+}
+
+
+/* =====================================
+   SYSTEM STATUS
+   ===================================== */
+
+.systemStatus{
+
+    margin-top: 35px;
+
+    color: #555b63;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.systemStatus span{
+
+    color: #737982;
+
+}
+
+
+/* =====================================
+   VOLUME BUTTON
+   ===================================== */
+
+#volumeButton{
+
+    position: fixed;
+
+    bottom: 20px;
+
+    right: 20px;
+
+    width: 38px;
+
+    height: 38px;
+
+    padding: 0;
+
+    border: 1px solid #555;
+
+    border-radius: 4px;
+
+    background: rgba(0,0,0,0.75);
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    z-index: 10001;
+
+}
+
+
+#volumeButton:hover{
+
+    background: rgba(40,40,40,0.9);
+
+}
+
+
+/* =====================================
+   SMALL SCREENS
+   ===================================== */
+
+@media (max-width: 600px){
+
+    #gameLogo{
+
+        width: 85vw;
+
+    }
+
+
+    .gameSubtitle{
+
+        font-size: 10px;
+
+        letter-spacing: 4px;
+
+        margin-bottom: 35px;
+
+    }
+
+
+    #playButton{
+
+        width: 190px;
+
+        height: 52px;
+
+        font-size: 16px;
+
+    }
+
+}
+
+/* =====================================
+   PAUSE MENU
+   ===================================== */
+
+#pauseMenu{
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+
+    height: 100dvh;
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.72);
+
+    z-index: 9998;
+
+}
+
+
+/* =====================================
+   PAUSE PANEL
+   ===================================== */
+
+#pausePanel{
+
+    width: 360px;
+
+    padding: 45px 40px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #15181c,
+            #090a0c
+        );
+
+    border: 1px solid #454a50;
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, 0.8);
+
+    text-align: center;
+
+}
+
+
+/* =====================================
+   PAUSE TITLE
+   ===================================== */
+
+#pauseTitle{
+
+    color: #d5d8dc;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* =====================================
+   PAUSE SUBTITLE
+   ===================================== */
+
+#pauseSubtitle{
+
+    color: #686f77;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 35px;
+
+}
+
+
+/* =====================================
+   PAUSE BUTTONS
+   ===================================== */
+
+#pausePanel button{
+
+    display: block;
+
+    width: 100%;
+
+    height: 48px;
+
+    margin-top: 12px;
+
+    background: #0c0e11;
+
+    border: 1px solid #454a50;
+
+    color: #c7cbd0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+#pausePanel button:hover{
+
+    background: #20242a;
+
+    border-color: #858b93;
+
+    color: white;
+
+}
+
+
+/* =====================================
+   SELECTED MENU BUTTON
+   ===================================== */
+
+#pausePanel button.pauseSelected,
+#mainMenuButtons button.pauseSelected{
+
+    background: #20242a;
+
+    border-color: #aeb3ba;
+
+    color: #ffffff;
+
+    outline: none;
+
+}
+
+/* =====================================
+   CONTROLS MENU
+   ===================================== */
+
+#controlsMenu{
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #050608;
+
+    z-index: 1000;
+
+}
+
+
+#controlsPanel{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 45px 70px;
+
+    background: #11151a;
+
+    border: 1px solid #4a5058;
+
+}
+
+
+#controlsTitle{
+
+    color: #ffffff;
+
+    font-size: 32px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.controlRow{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+}
+
+
+.controlName{
+
+	color: #ffffff;
+
+    font-size: 18px;
+
+}
+
+
+.controlKey{
+
+	color: #bfc4ca;
+
+    font-size: 15px;
+
+    opacity: 0.75;
+
+}
+
+#controlsBackButton{
+
+    margin-top: 20px;
+
+    min-width: 150px;
+
+    padding: 10px 25px;
+
+    background: #1b2026;
+
+    border: 1px solid #7a8088;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+
+}
+
+#controlsBackButton:hover{
+
+    background: #5a6068;
+
+    border-color: #ffffff;
+
+    transform: scale(1.05);
+
+}
+
+#controlsBackButton.pauseSelected{
+
+    background: #5a6068;
+
+    border: 2px solid #ffffff;
+
+    color: #ffffff;
+
+    transform: scale(1.05);
+
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+
+}
+
+#controlsMenu.menuHidden{
+
+    display: none;
+
+}
+
+/* =====================================
+   PROJECT ECLIPSE OPENING
+   ===================================== */
+
+#introScreen{
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+
+    height: 100dvh;
+
+    background: #000;
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 20000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+
+}
+
+
+#introScreen.introVisible{
+
+    display: flex;
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+#introContent{
+
+    position: relative;
+
+    width: 90%;
+
+    max-width: 900px;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+
+#introYear{
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #d7d9dc;
+
+    font-size: 64px;
+
+    font-weight: 300;
+
+    letter-spacing: 18px;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.5s ease;
+
+}
+
+
+#introYear.introShow{
+
+    opacity: 1;
+
+}
+
+
+#introYear.introHide{
+
+    opacity: 0;
+
+}
+
+
+#introTitle{
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #9da3aa;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    letter-spacing: 9px;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.5s ease;
+
+}
+
+
+#introTitle.introShow{
+
+    opacity: 1;
+
+}
+
+
+#introTitle.introHide{
+
+    opacity: 0;
+
+}
+
+
+#introText{
+
+    width: 80%;
+
+    max-width: 700px;
+
+    color: #c5c9ce;
+
+    font-size: 18px;
+
+    font-weight: 400;
+
+    line-height: 2;
+
+    letter-spacing: 1.5px;
+
+    white-space: pre-line;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.8s ease;
+
+}
+
+
+#introText.introShow{
+
+    opacity: 1;
+
+}
+
+
+#introText.introHide{
+
+    opacity: 0;
+
+}
+
+
+#introContinue{
+
+    position: absolute;
+
+    bottom: 45px;
+
+    left: 0;
+
+    right: 0;
+
+    color: #626970;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.8s ease;
+
+}
+
+
+#introContinue.introShow{
+
+    opacity: 1;
+
+}
+
+
+@media (max-width: 600px){
+
+    #introYear{
+
+        font-size: 42px;
+
+        letter-spacing: 11px;
+
+    }
+
+
+    #introTitle{
+
+        font-size: 17px;
+
+        letter-spacing: 6px;
+
+    }
+
+
+    #introText{
+
+        width: 90%;
+
+        font-size: 15px;
+
+        line-height: 1.8;
+
+    }
+
+
+    #introContinue{
+
+        bottom: 30px;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+    }
+
+}
+
+/* =========================================================
+   PROJECT ECLIPSE
+   RESPONSIVE SCREEN SYSTEM
+   ========================================================= */
+
+/* ---------- GLOBAL RESPONSIVE SAFETY ---------- */
+
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+
+html,
+body{
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+body{
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+
+/* ---------- GAME CANVAS ---------- */
+
+canvas{
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100vw;
+    max-height: 100dvh;
+}
+
+
+/* =========================================================
+   MAIN MENU
+   ========================================================= */
+
+#mainMenu{
+    width: 100%;
+    height: 100dvh;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(20px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(20px, env(safe-area-inset-left));
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.menuContent{
+    width: min(90%, 900px);
+    max-width: 900px;
+    min-width: 0;
+}
+
+#gameLogo{
+    width: min(75vw, 700px);
+    max-width: 100%;
+    height: auto;
+}
+
+.gameSubtitle{
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MAIN MENU BUTTONS
+   ========================================================= */
+
+#playButton,
+#continueButton{
+    width: min(220px, 80vw);
+    max-width: 100%;
+}
+
+#mainMenuButtons{
+    width: 100%;
+    max-width: 300px;
+}
+
+
+/* =========================================================
+   VOLUME BUTTON
+   ========================================================= */
+
+#volumeButton{
+    right: max(15px, env(safe-area-inset-right));
+    bottom: max(15px, env(safe-area-inset-bottom));
+
+    width: 38px;
+    height: 38px;
+}
+
+
+/* =========================================================
+   PAUSE MENU
+   ========================================================= */
+
+#pauseMenu{
+    width: 100%;
+    height: 100dvh;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(20px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(20px, env(safe-area-inset-left));
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* ---------- PAUSE PANEL ---------- */
+
+#pausePanel{
+    width: min(360px, 90vw);
+    max-width: 100%;
+
+    padding:
+        clamp(28px, 6vw, 45px)
+        clamp(20px, 6vw, 40px);
+
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+}
+
+
+/* ---------- PAUSE TEXT ---------- */
+
+#pauseTitle{
+    font-size: clamp(20px, 4vw, 25px);
+    letter-spacing: clamp(3px, 1vw, 5px);
+}
+
+#pauseSubtitle{
+    font-size: clamp(9px, 2vw, 11px);
+    letter-spacing: clamp(2px, 0.8vw, 4px);
+}
+
+
+/* ---------- PAUSE BUTTONS ---------- */
+
+#pausePanel button{
+    width: 100%;
+    max-width: 100%;
+
+    font-size: clamp(11px, 2vw, 13px);
+    letter-spacing: clamp(2px, 0.7vw, 3px);
+}
+
+
+/* =========================================================
+   CONTROLS MENU
+   ========================================================= */
+
+#controlsMenu{
+    width: 100%;
+    height: 100dvh;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(20px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(20px, env(safe-area-inset-left));
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* ---------- CONTROLS PANEL ---------- */
+
+#controlsPanel{
+    width: min(520px, 90vw);
+    max-width: 100%;
+
+    max-height: calc(100dvh - 40px);
+
+    padding:
+        clamp(25px, 6vw, 45px)
+        clamp(20px, 7vw, 70px);
+
+    overflow-y: auto;
+}
+
+
+/* ---------- CONTROLS TYPOGRAPHY ---------- */
+
+#controlsTitle{
+    font-size: clamp(24px, 6vw, 32px);
+    text-align: center;
+}
+
+.controlName{
+    font-size: clamp(15px, 4vw, 18px);
+    text-align: center;
+}
+
+.controlKey{
+    font-size: clamp(13px, 3.5vw, 15px);
+    text-align: center;
+}
+
+#controlsBackButton{
+    width: min(200px, 70vw);
+    max-width: 100%;
+
+    min-width: 0;
+
+    font-size: clamp(14px, 3.5vw, 16px);
+}
+
+
+/* =========================================================
+   OPENING INTRO
+   ========================================================= */
+
+#introScreen{
+    width: 100%;
+    height: 100dvh;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(20px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(20px, env(safe-area-inset-left));
+
+    overflow: hidden;
+}
+
+#introContent{
+    width: min(90%, 900px);
+    max-width: 900px;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/* ---------- INTRO YEAR ---------- */
+
+#introYear{
+    font-size: clamp(36px, 7vw, 64px);
+    letter-spacing: clamp(8px, 2vw, 18px);
+
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+
+/* ---------- INTRO TITLE ---------- */
+
+#introTitle{
+    max-width: 95%;
+
+    font-size: clamp(16px, 3vw, 24px);
+    letter-spacing: clamp(4px, 1.5vw, 9px);
+
+    white-space: nowrap;
+}
+
+
+/* ---------- INTRO STORY TEXT ---------- */
+
+#introText{
+    width: min(80%, 700px);
+    max-width: 100%;
+
+    font-size: clamp(14px, 2.2vw, 18px);
+    line-height: clamp(1.6, 2vw, 2);
+
+    letter-spacing: clamp(0.5px, 0.3vw, 1.5px);
+
+    overflow-wrap: break-word;
+}
+
+
+/* ---------- INTRO CONTINUE ---------- */
+
+#introContinue{
+    bottom: max(30px, env(safe-area-inset-bottom));
+
+    font-size: clamp(8px, 1.5vw, 10px);
+    letter-spacing: clamp(2px, 0.6vw, 4px);
+
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px){
+
+    #mainMenu{
+        padding: 15px;
+    }
+
+    #gameLogo{
+        width: 88vw;
+    }
+
+    .gameSubtitle{
+        font-size: 9px;
+        letter-spacing: 3px;
+        margin-bottom: 28px;
+    }
+
+    #playButton,
+    #continueButton{
+        width: min(190px, 82vw);
+        height: 50px;
+
+        font-size: 15px;
+        letter-spacing: 4px;
+    }
+
+    #pausePanel{
+        width: 92vw;
+
+        padding:
+            25px
+            18px;
+    }
+
+    #controlsPanel{
+        width: 92vw;
+
+        padding:
+            25px
+            18px;
+
+        gap: 14px;
+    }
+
+    #introYear{
+        font-size: clamp(30px, 10vw, 42px);
+        letter-spacing: 7px;
+    }
+
+    #introTitle{
+        font-size: 15px;
+        letter-spacing: 4px;
+    }
+
+    #introText{
+        width: 94%;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    #introContinue{
+        bottom: 25px;
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+}
+
+
+/* =========================================================
+   SHORT SCREENS
+   Handles short laptops and landscape phones/tablets
+   ========================================================= */
+
+@media (max-height: 600px){
+
+    #mainMenu{
+        align-items: flex-start;
+    }
+
+    .menuContent{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #gameLogo{
+        width: min(45vw, 500px);
+        margin-bottom: 15px;
+    }
+
+    .gameSubtitle{
+        margin-bottom: 20px;
+    }
+
+    #playButton,
+    #continueButton{
+        height: 48px;
+    }
+
+    .systemStatus{
+        margin-top: 20px;
+    }
+
+    #pausePanel{
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+
+    #pauseSubtitle{
+        margin-bottom: 20px;
+    }
+
+    #controlsPanel{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        gap: 10px;
+    }
+
+    #controlsTitle{
+        margin-bottom: 10px;
+    }
+
+    #controlsBackButton{
+        margin-top: 10px;
+    }
+
+    #introYear{
+        font-size: clamp(32px, 8vh, 56px);
+    }
+
+    #introTitle{
+        font-size: clamp(16px, 4vh, 22px);
+    }
+
+    #introText{
+        font-size: clamp(13px, 3vh, 17px);
+        line-height: 1.6;
+    }
+
+    #introContinue{
+        bottom: 20px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONES
+   ========================================================= */
+
+@media (orientation: landscape) and (max-height: 500px){
+
+    #mainMenu{
+        align-items: flex-start;
+    }
+
+    .menuContent{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    #gameLogo{
+        width: min(42vw, 420px);
+        margin-bottom: 10px;
+    }
+
+    .gameSubtitle{
+        font-size: 9px;
+        margin-bottom: 15px;
+    }
+
+    #playButton,
+    #continueButton{
+        height: 44px;
+        font-size: 14px;
+    }
+
+    #pausePanel{
+        padding: 20px;
+    }
+
+    #controlsPanel{
+        padding: 20px 30px;
+        gap: 10px;
+    }
+
+    #introText{
+        width: 80%;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    #introContinue{
+        bottom: 15px;
+    }
+}
